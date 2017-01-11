@@ -1,0 +1,49 @@
+<RootScreen>
+	LaunchScreen:
+	LightsScreen:
+	MusicScreen:
+
+<LaunchScreen>
+	name: 'launchscreen'
+	canvas.before:
+		Rectangle:
+			pos: self.pos
+			size: self.size
+			source: 'assets/images/embrace.jpg'
+	BoxLayout:
+		canvas.before:
+			Color:
+				rgba: 236, 207, 207, 1
+			Rectangle:
+				# self here refers to the widget i.e FloatLayout
+				pos: self.pos
+				size: self.size
+		orientation: 'horizontal'
+		size_hint_y: None
+		minimum_height: 350
+		padding: 10
+		spacing: 15
+		Button:
+			id: lighting
+			text: 'Lighting'
+			font_size: 25
+			on_release: app.root.current = 'lightsscreen'
+		Button:
+			id: nav
+			text: 'Navigation'
+			font_size: 25
+		Button:
+			id: flame
+			text: 'Flame'
+			font_size: 25
+		Button:
+			id: motor
+			text: 'Motor'
+			font_size: 25
+
+<LightsScreen>
+	name: 'lightsscreen'
+	BoxLayout:
+		Button:
+			text:	'Main Menu'
+			on_release: app.root.current = 'launchscreen'

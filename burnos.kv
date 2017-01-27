@@ -2,6 +2,10 @@
 	LaunchScreen:
 	LightsScreen:
 	MusicScreen:
+	SoundBoard:
+	Navigation:
+	System:
+
 
 <LaunchScreen>
 	name: 'launchscreen'
@@ -10,6 +14,13 @@
 			pos: self.pos
 			size: self.size
 			source: 'assets/images/embrace.jpg'
+	ActionBar:
+	    pos_hint: {'top':1}
+	    ActionView:
+	        use_separator: True
+	        ActionPrevious:
+	            title: 'BurnedPi'
+	            with_previous: False
 	BoxLayout:
 		canvas.before:
 			Color:
@@ -29,9 +40,15 @@
 			font_size: 25
 			on_release: app.root.current = 'lightsscreen'
 		Button:
+			id: soundboard
+			text: 'Sound Board'
+			font_size: 25
+			on_release: app.root.current = 'soundboard'
+		Button:
 			id: nav
 			text: 'Navigation'
 			font_size: 25
+			on_release: app.root.current = 'navigation'
 		Button:
 			id: flame
 			text: 'Flame'
@@ -40,6 +57,22 @@
 			id: motor
 			text: 'Motor'
 			font_size: 25
+		Button:
+			id: system
+			text: 'System'
+			font_size: 25
+			on_release: app.root.current = 'system'
+
+<System>
+	name: 'system'
+	BoxLayout:
+		Button:
+			text:	'Main Menu'
+			on_release: app.root.current = 'launchscreen'
+		Label:
+			text: 'Current Free Memory ' + app.mem()
+		Label:
+			text: 
 
 <LightsScreen>
 	name: 'lightsscreen'
@@ -47,3 +80,47 @@
 		Button:
 			text:	'Main Menu'
 			on_release: app.root.current = 'launchscreen'
+
+<SoundBoard>
+	name: 'soundboard'
+	BoxLayout:
+		Button:
+			text:	'Main Menu'
+			on_release: app.root.current = 'launchscreen'
+		Button:
+			text:	'Scotch!'
+			on_press:	root.scotch()
+<Navigation>
+	name: 'navigation'
+	
+	RelativeLayout:
+	
+	    MapView:
+	        id: mapview
+	        lat: 40.7539
+	        lon: -119.2036
+	        zoom: 12
+	        #size_hint: .5, .5
+	        #pos_hint: {"x": .25, "y": .25}
+	
+	        #on_map_relocated: mapview2.sync_to(self)
+	        #on_map_relocated: mapview3.sync_to(self)
+	
+	        MapMarker:
+	            lat: 40.7539
+	            lon: -119.2036
+	        
+	        BoxLayout:
+	        	pos: 0,0
+		        size_hint: None, None
+		        size: 200, 100 
+				Button:
+					height: 60
+					width: 150
+					text: "Launch Screen"
+					on_release: app.root.current = 'launchscreen'
+				Button:
+					height: 60
+					width: 150
+					text: "Move to Claremont"
+					on_release: mapview.center_on(34.1245, -117.7144)

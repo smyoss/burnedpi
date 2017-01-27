@@ -1,3 +1,24 @@
+#:kivy 1.8.0
+#:import KivyLexer kivy.extras.highlight.KivyLexer
+#:import Factory kivy.factory.Factory
+
+<ActionSpinnerOptions@SpinnerOption>
+    background_color: .4, .4, .4, 1
+
+<ActionSpinner@Spinner+ActionItem>
+    canvas.before:
+        Color:
+            rgba: 0.128, 0.128, 0.128, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    border: 27, 20, 12, 12
+    background_normal: 'atlas://data/images/defaulttheme/action_group'
+    option_cls: Factory.ActionSpinnerOptions
+
+<ActionDropdown>:
+    on_size: self.width = '220dp'
+                
 <RootScreen>
 	LaunchScreen:
 	LightsScreen:
@@ -14,6 +35,7 @@
 			pos: self.pos
 			size: self.size
 			source: 'assets/images/embrace.jpg'
+	
 	ActionBar:
 	    pos_hint: {'top':1}
 	    ActionView:
@@ -21,10 +43,24 @@
 	        ActionPrevious:
 	            title: 'BurnedPi'
 	            with_previous: False
-	BoxLayout:
+	        ActionToggleButton:
+                text: 'Quit'
+                on_release: App.get_running_app().stop()
+                
+            ActionButton:
+                text: 'Settings'
+
+            ActionButton:
+                text: app.time
+
+	GridLayout:
+		id: content
+		cols: 2
+		spacing: '8dp'
+		padding: '8dp'
 		canvas.before:
 			Color:
-				rgba: 236, 207, 207, 1
+				rgba: 236, 207, 207, .2
 			Rectangle:
 				# self here refers to the widget i.e FloatLayout
 				pos: self.pos
@@ -34,6 +70,9 @@
 		minimum_height: 350
 		padding: 10
 		spacing: 15
+		size_hint: .75, .75
+		pos: (self.parent.width-self.width)/2, (self.parent.height-self.height)/2.5
+		
 		Button:
 			id: lighting
 			text: 'Lighting'
@@ -81,6 +120,8 @@
 			text:	'Main Menu'
 			on_release: app.root.current = 'launchscreen'
 
+
+
 <SoundBoard>
 	name: 'soundboard'
 	BoxLayout:
@@ -90,6 +131,8 @@
 		Button:
 			text:	'Scotch!'
 			on_press:	root.scotch()
+
+
 <Navigation>
 	name: 'navigation'
 	

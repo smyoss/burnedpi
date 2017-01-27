@@ -36,7 +36,12 @@ from kivy.garden.mapview import MapView, MapMarker
 
 import psutil
 import random
+import datetime
+import time
 
+class IncrediblyCrudeClock(Label):
+    def update(self, *args):
+        self.text = time.asctime()
 
 class LaunchScreen(Screen):
 	pass
@@ -78,8 +83,22 @@ class BurnOsApp(App):
 		mem = psutil.virtual_memory().percent
 		mem = '%s' % mem
 		return mem
+		
+	time = StringProperty ()
 	
+	def time_update(self, *args):
+		self.time = str(time.asctime())
+		
+	#def update_time(self, *args):
+		#t = datetime.datetime.now()
+        
+	#def crudeclock(self):
+		#t = time.strftime("%b %d %Y %H:%M:%S")
+		#Clock.schedule_interval(self.update_time, 1)
+		#return t
+				
 	def build(self):
+		Clock.schedule_interval(self.time_update, 1)
 		return RootScreen()
 
 if __name__ == "__main__":

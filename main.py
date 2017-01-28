@@ -12,10 +12,12 @@ LEAVE NO TRACE.
 '''
 import os
 os.environ['KIVY_AUDIO'] = 'sdl2'
+os.environ['KIVY_IMAGE'] = 'pil,sdl2'
 
 from kivy.app import App
 
-#IMPORT ALL THE UX COMPONENTS 
+#IMPORT ALL THE UX COMPONENTS
+from PIL import Image
 from kivy.clock import Clock
 from kivy.uix.accordion import Accordion
 from kivy.uix.label import Label
@@ -38,17 +40,17 @@ import psutil
 import random
 import datetime
 import time
-
-class IncrediblyCrudeClock(Label):
-    def update(self, *args):
-        self.text = time.asctime()
+import RPi.GPIO as GPIO
 
 class LaunchScreen(Screen):
 	pass
 
 class LightsScreen(Screen):
 	pass
-	
+
+class WeatherScreen(Screen):	
+	pass
+
 class Navigation(Screen):
 	pass
 
@@ -57,8 +59,9 @@ class System(Screen):
 		mem = p.virtual_memory().percent
 		return mem
 
-	def processor():
-		processor = p.cpu_percent(interval=1)
+	def processor(self):
+		processor = psutil.cpu_percent(interval=1)
+		processor = '%s' % processor
 		return processor
 		
 class MusicScreen(Screen):
@@ -88,15 +91,7 @@ class BurnOsApp(App):
 	
 	def time_update(self, *args):
 		self.time = str(time.asctime())
-		
-	#def update_time(self, *args):
-		#t = datetime.datetime.now()
-        
-	#def crudeclock(self):
-		#t = time.strftime("%b %d %Y %H:%M:%S")
-		#Clock.schedule_interval(self.update_time, 1)
-		#return t
-				
+	
 	def build(self):
 		Clock.schedule_interval(self.time_update, 1)
 		return RootScreen()

@@ -1,6 +1,7 @@
 #:kivy 1.8.0
 #:import KivyLexer kivy.extras.highlight.KivyLexer
 #:import Factory kivy.factory.Factory
+#:import led led
 
 <ActionSpinnerOptions@SpinnerOption>
     background_color: .4, .4, .4, 1
@@ -26,6 +27,7 @@
 	SoundBoard:
 	Navigation:
 	System:
+	WeatherScreen:
 
 
 <LaunchScreen>
@@ -49,6 +51,7 @@
                 
             ActionButton:
                 text: 'Settings'
+                on_release: app.root.current = 'system' 
 
             ActionButton:
                 text: app.time
@@ -97,10 +100,10 @@
 			text: 'Motor'
 			font_size: 25
 		Button:
-			id: system
-			text: 'System'
+			id: weather
+			text: 'Weather'
 			font_size: 25
-			on_release: app.root.current = 'system'
+			on_release: app.root.current = 'weatherscreen'
 
 <System>
 	name: 'system'
@@ -111,10 +114,22 @@
 		Label:
 			text: 'Current Free Memory ' + app.mem()
 		Label:
-			text: 
+			text: 'Current Processor ' + root.processor()
+
 
 <LightsScreen>
 	name: 'lightsscreen'
+	BoxLayout:
+		Button:
+			text:	'Blue'
+			on_release: led.colorWipe(strip, Color(255, 0, 0))
+		Button:
+			text:	'Main Menu'
+			on_release: app.root.current = 'launchscreen'
+
+
+<WeatherScreen>
+	name: 'weatherscreen'
 	BoxLayout:
 		Button:
 			text:	'Main Menu'
